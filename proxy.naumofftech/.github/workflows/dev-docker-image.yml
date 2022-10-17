@@ -1,0 +1,27 @@
+name: Dev Docker Image CI To GitHub Packages
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Docker Login
+      run: echo ${{ secrets.GHCR_TOKEN }}| docker login ghcr.io -u ${{ secrets.GHCR_USER }} --password-stdin
+
+    - name: Build The Docker Image
+
+      run: |
+        docker build --tag ghcr.io/${{ secrets.GHCR_USER }}/dev.proxy.naumofftech:latest .
+
+    - name: Push The Image
+      run: docker push ghcr.io/${{ secrets.GHCR_USER }}/dev.proxy.naumofftech:latest
+
+# fix
+# remove signed commits

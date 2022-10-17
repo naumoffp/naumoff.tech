@@ -1,0 +1,10 @@
+version: '3.5'
+
+services:
+  serf:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
